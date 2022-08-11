@@ -1,23 +1,39 @@
-from machine import Pin  
-import time
+from machine import Pin
+import time 
 
-# dir = pin 12  (d6 on esp8266 - GPIO 12)
-# step = pin 14 (d5 on esp8266 - GPIO 14)
-# enable = pin 13 (d7 on esp8266 - GPIO 13)
 
-dp = Pin(4, Pin.OUT) # d2 wemos
-sp = Pin(5, Pin.OUT) # d1 wemos
-ep = Pin(2, Pin.OUT) #d4 wemos 
+#for connecting 24BYJ48 stepper to driver
+# blue - 2B
+# pink - 2B
+# yellow - 1B
+# orange - 2A 
+# Red - nothing
+dp = Pin(4, Pin.OUT) # d2 wemos # DIR pin
+sp = Pin(5, Pin.OUT) # d1 wemos # STEP pin
+#ep = Pin(2, Pin.OUT) #d4 wemos
 
-ep.value(1)
-dp.value(1)
-sp.value(1)
+dp.value(0)  # DIR pin
+sp.value(0)  # STEP pin
 
-ep.value(0)
-for i in range(1000):
-    sp.value(1)
-    time.sleep_us(2)
-    sp.value(0)
-    print(i)
-    time.sleep_us(1000)
+#class step():
+#    def __init__():
+#        pass
+    
+def forward():
+    dp.value(1)
+    for i in range(5000):
+        sp.value(1)
+        time.sleep_us(2)
+        sp.value(0)
+        print(i)
+        time.sleep_us(1000)
+
+def back():
+    dp.value(0)
+    for i in range(5000):
+        sp.value(1)
+        time.sleep_us(2)
+        sp.value(0)
+        print(i)
+        time.sleep_us(1000)
 
